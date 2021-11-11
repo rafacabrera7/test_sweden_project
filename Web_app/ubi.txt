@@ -1,0 +1,224 @@
+    1  sudo apt-get update
+    2  sudo apt-get upgrade
+    3  clear
+    4  ls
+    5  cd home/
+    6  ls
+    7  cd .
+    8  l
+    9  cd ..
+   10  ls
+   11  import psycopg2
+   12  pip3 install Psycopg2
+   13  sudo apt install python3-pip
+   14  cd home/
+   15  ls
+   16  nano requirements.txt
+   17  pip3 install -r requirements.txt 
+   18  sudo pip3 install -r requirements.txt 
+   19  nano requirements.txt 
+   20  sudo pip3 install -r requirements.txt 
+   21  nano requirements.txt 
+   22  sudo pip3 install -r requirements.txt 
+   23  nano requirements.txt 
+   24  sudo pip3 install -r requirements.txt 
+   25  nano requirements.txt 
+   26  sudo pip3 install -r requirements.txt 
+   27  nano requirements.txt 
+   28  sudo pip3 install -r requirements.txt 
+   29  nano requirements.txt 
+   30  sudo pip3 install -r requirements.txt 
+   31  nano requirements.txt 
+   32  sudo pip3 install -r requirements.txt 
+   33  nano requirements.txt 
+   34  sudo pip3 install -r requirements.txt 
+   35  ls
+   36  cd Web_
+   37  cd Web_app/
+   38  ls
+   39  uvicorn main:app --reload
+   40  sudo apt install uvicorn
+   41  sudo apt-get install python-psycopg2
+   42  sudo apt-get install python3-psycopg2
+   43  clear
+   44  uvicorn main:app --reload
+   45  python3 main.py 
+   46  sudo pip3 install fastapi[all]
+   47  clear
+   48  python3 main.py 
+   49  python3 main.py 
+   50  sudo pip3 install tqdm
+   51  python3 main.py 
+   52  sudo pip3 install bs4
+   53  python3 main.py 
+   54  sudo uvicorn main:app --reload
+   55  clear
+   56  sudo uvicorn main:app --reload --host 0.0.0.0
+   57  sudo pip3 install chromedriver-py
+   58  sudo screen uvicorn main:app --reload --host 0.0.0.0
+   59  sudo uvicorn main:app --reload --host 0.0.0.0
+   60  ps
+   61  pkill uvicorn
+   62  sudo pkill uvicorn
+   63  python3 main.py 
+   64  sudo uvicorn main:app --reload --host 0.0.0.0
+   65  netstat -a
+   66  sudo apt install net-tools
+   67  netstat -a
+   68  kill $(pgrep -P $uvicorn_pid)
+   69  exit
+   70  clear
+   71  python3 main.py 
+   72  sudo uvicorn main:app --reload --host 0.0.0.0
+   73  exit
+   74  cd home/
+   75  ls
+   76  cd Web_app/
+   77  python3 main.py 
+   78  sudo uvicorn main:app --reload --host 0.0.0.0
+   79  wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+   80  unzip chromedriver_linux64.zip
+   81  sudo apt install unzip
+   82  unzip chromedriver_linux64.zip
+   83  ls
+   84  sudo mv -f chromedriver /usr/local/share
+   85  sudo chmod +x /usr/local/share/chromedriver
+   86  sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+   87  sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+   88  exit
+   89  clear
+   90  python3 main.py 
+   91  cd home/
+   92  cd Web_app/
+   93  python3 main.py 
+   94  sudo uvicorn main:app --reload --host 0.0.0.0
+   95  sudo pkill uvicorn 
+   96  clwar
+   97  clear
+   98  sudo uvicorn main:app --reload --host 0.0.0.0
+   99  sudo pip3 install chromedriver-binary
+  100  python3 main.py 
+  101  sudo uvicorn main:app --reload --host 0.0.0.0
+  102  sudo pkill uvicorn 
+  103  python3 main.py 
+  104  sudo uvicorn main:app --reload --host 0.0.0.0
+  105  sudo pkill uvicorn 
+  106  exit
+  107  python3 main.py 
+  108  sudo uvicorn main:app --reload --host 0.0.0.0
+  109  exit
+  110  cd home/Web_app/
+  111  python3 main.py 
+  112  sudo uvicorn main:app --reload --host 0.0.0.0
+  113  cd ~
+  114  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  115  sudo apt install ./google-chrome-stable_current_amd64.deb
+  116  exit
+  117  cd home/Web_app/
+  118  python3 main.py 
+  119  sudo uvicorn main:app --reload --host 0.0.0.0
+  120  exit
+  121  cd home/Web_app/
+  122  python3 main.py 
+  123  sudo uvicorn main:app --reload --host 0.0.0.0
+  124  sudo pkill uvicorn
+  125  python3 main.py 
+  126  sudo uvicorn main:app --reload --host 0.0.0.0
+  127  cd ../Database/
+  128  ls
+  129  nano dbSQL.py 
+  130  nao buffer_code.py 
+  131  nano buffer_code.py 
+  132  python3 buffer_code.py 
+  133  sudo pip3 install pandas
+  134  nano buffer_code.py 
+  135  python3 buffer_code.py 
+  136  nano buffer_code.py 
+  137  python3 buffer_code.py 
+  138  nano buffer_code.py 
+  139  python3 buffer_code.py 
+  140  nano buffer_code.py 
+  141  python3 buffer_code.py 
+  142  cd ../Web_app
+  143  python3 main.py 
+  144  sudo uvicorn main:app --reload --host 0.0.0.0
+  145  sudo pkill uvicorn
+  146  exit
+  147  cd home/Web_app
+  148  python3 main.py 
+  149  sudo uvicorn main:app --reload --host 0.0.0.0
+  150  cd ../Web_Scraping/
+  151  ls
+  152  nano script_rafa.py
+  153  python3 script_rafa.py 
+  154  cd ~
+  155  cd usr
+  156  cd su
+  157  cd /
+  158  ls
+  159  cd bin
+  160  ls
+  161  cd ..
+  162  ls
+  163  cd usr
+  164  ls
+  165  cd bin
+  166  ls
+  167  cd ~/home/Web_app/
+  168  python3 main.py 
+  169  exit
+  170  cd home/
+  171  nano script_rafa.py
+  172  cd Web_app/
+  173  cd ../Web_Scraping/
+  174  nano script_rafa.py 
+  175  cd ../Web_app/
+  176  python3 main.py 
+  177  sudo uvicorn main:app --reload --host 0.0.0.0 --port 80
+  178  EXIT
+  179  exit
+  180  clear
+  181  cd home/Web_Scraping/
+  182  nano script_rafa.py 
+  183  cd ../Web_app/
+  184  python3 main.py 
+  185  sudo uvicorn main:app --reload --host 0.0.0.0 --port 80
+  186  sudo screen uvicorn main:app --reload --host 0.0.0.0 --port 80
+  187  sudo screen -r
+  188  screen -r
+  189  sudo screen -r
+  190  cd
+  191  ls
+  192  sudo apt install ./google-chrome-stable_current_amd64.deb 
+  193  clear
+  194  sudo screen -r
+  195  clear
+  196  cd home/Web_app/
+  197  ls
+  198  python3 main.py 
+  199  sudo screen uvicorn main:app --reload --host 0.0.0.0 --port 80
+  200  exit
+  201  ls
+  202  sudo dpkg -i 
+  203  sudo dpkg -i google-chrome-stable_current_amd64.deb 
+  204  ls
+  205  cd home/
+  206  ls
+  207  screen -ls
+  208  screen -r
+  209  cd Web_
+  210  cd Web_app/
+  211  ls
+  212  python3 main.py 
+  213  sudo screen -r
+  214  ls
+  215  sudo su
+  216  ls
+  217  cd home/Web_app/
+  218  ls
+  219  clear
+  220  ls
+  221  python3 main.py 
+  222* history |
+  223  history |grep uviron
+  224  history >> ubi.txt

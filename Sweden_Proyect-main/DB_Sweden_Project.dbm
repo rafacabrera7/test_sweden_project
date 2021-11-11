@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,0" last-zoom="0.6" max-obj-count="9"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="job_offer" layer="0" collapse-mode="2" max-obj-count="12">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="540" y="100"/>
+	<column name="id_job" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name_job" not-null="true">
+		<type name="varchar" length="60"/>
+	</column>
+	<column name="description_job">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="email_job" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="date_accesed">
+		<type name="date" length="0"/>
+	</column>
+	<column name="url_job">
+		<type name="varchar" length="70"/>
+	</column>
+	<constraint name="job_offer_pk" type="pk-constr" table="public.job_offer">
+		<columns names="id_job" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_city_city" index="7"/>
+		<object name="id_company_company" index="4"/>
+		<object name="id_sector_main_sector" index="8"/>
+		<object name="id_subcategory_subcategory" index="9"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="city_fk" index="2"/>
+		<object name="company_fk" index="1"/>
+		<object name="main_sector_fk" index="3"/>
+		<object name="subcategory_fk" index="4"/>
+	</customidxs>
+</table>
+
+<table name="company" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="260"/>
+	<column name="id_company" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name_company" not-null="true">
+		<type name="varchar" length="80"/>
+	</column>
+	<constraint name="company_pk" type="pk-constr" table="public.company">
+		<columns names="id_company" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="main_sector" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="160" y="100"/>
+	<column name="id_sector" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name_sector" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="sector_pk" type="pk-constr" table="public.main_sector">
+		<columns names="id_sector" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="company_has_many_job_offer" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#00ff7f"
+	 src-table="public.company"
+	 dst-table="public.job_offer"
+	 src-required="true" dst-required="false">
+	<label ref-type="src-label">
+		<position x="-14.15" y="-12.3518"/>
+	</label>
+</relationship>
+
+<relationship name="sector_has_many_job_offer" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#ffaa00"
+	 src-table="public.main_sector"
+	 dst-table="public.job_offer"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-21.9839" y="-82.8857"/>
+	</label>
+</relationship>
+
+<table name="customer" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="480" y="720"/>
+	<column name="id_customer" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name_customer" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="customer_email" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="password_customer" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<constraint name="customer_pk" type="pk-constr" table="public.customer">
+		<columns names="id_customer" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="body_message" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="940" y="680"/>
+	<column name="body_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="body_message">
+		<type name="varchar" length="2000"/>
+	</column>
+	<constraint name="body_message_pk" type="pk-constr" table="public.body_message">
+		<columns names="body_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_customer_customer" index="0"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="customer_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="city" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="100"/>
+	<column name="id_city" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="name_city" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="city_pk" type="pk-constr" table="public.city">
+		<columns names="id_city" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="city_has_many_job_offer" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#1e7a93"
+	 src-table="public.city"
+	 dst-table="public.job_offer"
+	 src-required="false" dst-required="false">
+	<label ref-type="src-label">
+		<position x="-14.15" y="-17.7441"/>
+	</label>
+	<label ref-type="name-label">
+		<position x="-4.73783" y="-72.8857"/>
+	</label>
+</relationship>
+
+<table name="subcategory" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="100" y="280"/>
+	<column name="id_subcategory" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name_subcategory" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="subcategory_pk" type="pk-constr" table="public.subcategory">
+		<columns names="id_subcategory" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="subcategory_has_many_job_offer" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#cac69f"
+	 src-table="public.subcategory"
+	 dst-table="public.job_offer"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-25.5777" y="7.11434"/>
+	</label>
+</relationship>
+
+<relationship name="customer_has_many_body_message" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fca30b"
+	 src-table="public.customer"
+	 dst-table="public.body_message"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<table name="application" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="180" y="480"/>
+	<column name="date_app">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="application_pk" type="pk-constr" table="public.application">
+		</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_customer_customer" index="0"/>
+		<object name="id_job_job_offer" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="customer_fk" index="2"/>
+		<object name="job_offer_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="job_offer_has_many_application" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c24706"
+	 src-table="public.job_offer"
+	 dst-table="public.application"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="src-label">
+		<position x="-14.15" y="-5.77865"/>
+	</label>
+	<label ref-type="name-label">
+		<position x="6.75904" y="19.3143"/>
+	</label>
+</relationship>
+
+<relationship name="customer_has_many_application" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#361a55"
+	 src-table="public.customer"
+	 dst-table="public.application"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="-59.7995" y="-5.58566"/>
+	</label>
+</relationship>
+
+</dbmodel>

@@ -1,0 +1,24 @@
+Email Sender:
+https://stackoverflow.com/questions/8381210/how-to-send-a-mail-to-hundreds-of-thousands-recipients-in-python-fast-which-each
+
+
+Configure Postgres on AWS:
+https://betterprogramming.pub/how-to-provision-a-cheap-postgresql-database-in-aws-ec2-9984ff3ddaea
+
+Amazon SES SMTP Credentials:
+
+HOST:
+email-smtp.us-east-2.amazonaws.com
+
+PORT:
+587
+
+
+nov 5
+IAM User name:
+
+ses-smtp-user.20211105-151059
+SMTP Username:
+AKIAUJOMKZ2YWM34O65V
+SMTP Password:
+BOlS9p5Ui3bv3Klk+ns90jU1pvlBq4RXDYhafqMpzidF
