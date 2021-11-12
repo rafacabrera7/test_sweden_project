@@ -1,6 +1,10 @@
 # perform pip install fastapi[all]
 # pip install typing
 # pip install pydantic
+# pip install os-sys
+# pip install httptools==0.1.1
+# pip install uvicorn==0.11.3
+# pip install uvicorn
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.staticfiles import StaticFiles
@@ -22,10 +26,12 @@ from datetime import date
 
 
 class Client(BaseModel):
+    client_id: Optional[int] = None
     name: str
     email: str
     password: str
-
+    smtp_user: str
+    smtp_password: str
 
 class ClientBodyInsert(BaseModel):
     id: int
@@ -34,6 +40,7 @@ class ClientBodyInsert(BaseModel):
 
 
 class JobOfferInsert(BaseModel):
+    id_job: int
     name: str
     description: str
     email_job_offer: str
@@ -91,14 +98,17 @@ async def ScrapeRequest(
 async def insert_client(
         client: Client):
     # perform validations
+    print(client.client_id)
     print(client.name)
     print(client.email)
     print(client.password)
-    t = (client.name, client.email, client.password)
-    insert_customer(t)
-    return {"success": True, "msg": "Inserted"}
+    print(client.smtp_user)
+    print(client.smtp_password)
+    t = (client.client_id, client.name, client.email, client.password, client.smtp_user, client.smtp_password)
+    m = insert_customer(t)
+    return {"success": True, "msg": m}
 
-
+# working on client list
 @app.get("/list_clients")
 async def list_clients():
     t_clients = get_client_list()
@@ -106,8 +116,7 @@ async def list_clients():
     for c in t_clients:
         dic_cli = {"client_id": c[0], "name": c[1],
                    "email": c[2], "email_password": c[3],
-                   "date_inserted": c[4],
-                   "number_of_apps": c[5]}
+                   "date_inserted": c[4]}
         ls_clients.append(dic_cli)
 
     count = len(ls_clients)
@@ -119,10 +128,11 @@ async def client_report(
     client_id: int,
     to_display: int,
 ):
+
     t_apps = get_client_report(client_id, to_display)
     ls_apps = []
     for a in t_apps:
-        dic_app = {"job_name": a[1], "company": a[2], "email": a[3], "url": a[4], "date": a[5]}
+        dic_app = {"job_id": a[0], "job_name": a[1], "company": a[2], "email": a[3], "url": a[4], "date": a[5]}
         ls_apps.append(dic_app)
 
     return {"success": True, "jobs": ls_apps, "max_applications": len(ls_apps)}
@@ -176,7 +186,7 @@ async def list_joboffer(
     t_jobs = get_job_offer_list()
     ls_jobs = []
     for j in t_jobs:
-        dic_job = {"job_name": j[1],
+        dic_job = {"job_id":j[0],"job_name": j[1],
                    "description": j[2], "company": j[3],
                    "url": j[4], "date": j[5], "category": j[6], "subcategory": j[7],
                    "email_joboffer": j[8]}
@@ -193,6 +203,24 @@ async def list_jobcompanies():
         ls_companies[str(c[0])] = c[1]
     count = len(ls_companies)
     return {"success": True, "companies": ls_companies, "count": count}
+
+@app.get("/list_job_categories")
+async def list_jobcompanies():
+    info = get_category_list()
+    categories = {}
+    for t in info:
+        categories[t[0]] = t[1]
+    count = len(categories)
+    return {"success": True, "categories": categories, "count": count}
+
+@app.get("/list_job_subcategories")
+async def list_jobcompanies():
+    info = get_subcategory_list()
+    subcategories = {}
+    for t in info:
+        subcategories[t[0]] = t[1]
+    count = len(subcategories)
+    return {"success": True, "subcategories": subcategories, "count": count}
 
 
 @app.get("/company_report/")

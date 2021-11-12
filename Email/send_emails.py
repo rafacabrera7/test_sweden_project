@@ -1,12 +1,18 @@
+# pip install secure-smtplib
+# pip install pycopy-email.utils
+# pip install email
+
 import smtplib
 import email.utils
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 import sys
 sys.path.append('../Database/')
 from dbSQL import *
+from pathlib import Path
 
-def send_Email(id_customer, subject, id_body, file, recipient, id_job,j_description="", id_company=None):
+def send_Email(id_customer, subject, id_body, id_cv, recipient, id_job,j_description="", id_company=None):
 
     info = get_customer(id_customer)
 
@@ -73,11 +79,20 @@ def send_Email(id_customer, subject, id_body, file, recipient, id_job,j_descript
     msg.attach(part1)
     # msg.attach(part2)
 
-    # with open('CV_Rafael_Cabrera_Jimenez.pdf', 'rb') as f:
-    #     file_data = f.read()
-    #     file_name = f.name
-    #
-    # msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename=file_name)
+    cv_path = get_cv_path(id_customer, id_cv)
+    cv_name = get_cv_name(id_customer, id_cv)
+
+    path = Path(cv_path)
+    with open(path, "rb") as fil:
+        print("opened")
+        part = MIMEApplication(
+            fil.read(),
+            Name=cv_name
+        )
+
+    # After the file is closed
+    part['Content-Disposition'] = 'attachment; filename="%s"' % cv_name
+    msg.attach(part)
 
 
     # Try to send the message.
@@ -100,13 +115,13 @@ def send_Email(id_customer, subject, id_body, file, recipient, id_job,j_descript
         print ("Email sent!")
         return 1
 
-def send_Emails(id_customer, subject, id_body, file, n_jobs, id_sector, id_subcategory=None):
+def send_Emails(id_customer, subject, id_body, id_cv, n_jobs, id_sector, id_subcategory=None):
     job_list = get_jobs(id_customer, n_jobs, id_sector, id_subcategory)
     c = 0
     print("Emails will be be sent: ")
     for j in job_list:
         print(j[3])
-        t = send_Email(id_customer, subject, id_body, file, j[3], j[0],j[2], j[4])
+        t = send_Email(id_customer, subject, id_body, id_cv, j[3], j[0],j[2], j[4])
         c+=t
     r = str(c) + " emails sent"
     return r

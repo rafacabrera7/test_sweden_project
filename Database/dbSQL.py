@@ -1,3 +1,6 @@
+# pip install psycopg2
+# pip install DateTime
+
 import psycopg2
 from datetime import date
 
@@ -339,7 +342,9 @@ def insert_customer(tuple):
 
         cursor = con.cursor()
 
-        sql_check = """SELECT name_customer FROM customer"""
+        m = ""
+
+        sql_check = """SELECT id_customer FROM customer"""
         cursor.execute(sql_check)
         customers_tuples = cursor.fetchall()
         customers_ls = []
@@ -348,24 +353,23 @@ def insert_customer(tuple):
             customers_ls.append(customer[0])
 
         if tuple[0] not in customers_ls:
-            sql_insert = """INSERT INTO customer VALUES (DEFAULT, %s, %s, %s, %s, NULL, NULL)
+            sql_insert = """INSERT INTO customer VALUES (DEFAULT, %s, %s, %s, %s, %s, %s)
                     RETURNING id_customer"""
-            f_tuple = tuple +(date.today(),)
+            f_tuple = (tuple[1],tuple[2],tuple[3]) +(date.today(),tuple[4],tuple[5])
             cursor.execute(sql_insert, (f_tuple))
             print("customer insertion completed!")
-
+            m = "customer insertion completed! New id given"
         else:
-            sql_search = """SELECT id_customer FROM customer
-                            WHERE name_customer = %s"""
-            cursor.execute(sql_search,(tuple[0],))
-            print("customer value already existed")
-
-        id_comp = cursor.fetchone()
-        id_comp = id_comp[0]
+            sql_update = """UPDATE customer SET (name_customer, email_customer, password_customer, user_smtp, password_smtp)
+                            = (%s,%s,%s,%s,%s)
+                            WHERE id_customer = %s"""
+            cursor.execute(sql_update,(tuple[1], tuple[2], tuple[3], tuple[4], tuple[5], tuple[0]))
+            print("customer value already existed, updated")
+            m = "customer value already existed, values updated"
 
         con.commit()
 
-        return id_comp
+        return m
 
     except psycopg2.Error as e:
         print("Error connecting", e)
@@ -715,16 +719,7 @@ def get_client_list():
         cursor = con.cursor()
 
         sql_get = """
-                    SELECT id_customer, name_customer, email_customer, password_customer, date_inserted, n_apps_sent
-                    FROM (
-                    	SELECT * FROM CUSTOMER
-                    	INNER JOIN (
-                    				SELECT id_customer_customer, COUNT(*) as n_apps_sent
-                    				FROM application
-                    				GROUP BY id_customer_customer
-                    				) as cust_app_count
-                    	ON id_customer = id_customer_customer
-                    ) as cust_apps_count
+                    SELECT id_customer, name_customer, email_customer, password_customer, date_inserted FROM customer
                     """
         cursor.execute(sql_get)
 
@@ -952,6 +947,150 @@ def get_cv_report(id_customer):
                     """
         cursor.execute(sql_get, (id_customer,))
 
+
+        rows = cursor.fetchall()
+
+        return rows
+
+        con.commit()
+
+
+    except psycopg2.Error as e:
+        print("Error connecting", e)
+        con.rollback();
+
+    finally:
+        cursor.close()
+        con.close()
+        print("Conection closed")
+
+def get_cv_path(id_customer, id_cv):
+    try:
+        con = psycopg2.connect(user = "postgres",
+                               password = "Cabrera05",
+                               database = "Sweden",
+                               host = "database-1.ccgnox6axprd.us-east-2.rds.amazonaws.com",
+                               port = "5432")
+        print("Conexión exitosa!")
+
+        con.autocommit = False
+
+        cursor = con.cursor()
+
+        sql_get = """
+                    SELECT path_cv FROM resume
+                    WHERE id_customer_customer = %s
+                    AND id_cv = %s
+                    """
+        cursor.execute(sql_get, (id_customer,id_cv))
+
+
+        row = cursor.fetchone()
+
+        return str(row[0])
+
+        con.commit()
+
+
+    except psycopg2.Error as e:
+        print("Error connecting", e)
+        con.rollback();
+
+    finally:
+        cursor.close()
+        con.close()
+        print("Conection closed")
+
+def get_cv_name(id_customer, id_cv):
+    try:
+        con = psycopg2.connect(user = "postgres",
+                               password = "Cabrera05",
+                               database = "Sweden",
+                               host = "database-1.ccgnox6axprd.us-east-2.rds.amazonaws.com",
+                               port = "5432")
+        print("Conexión exitosa!")
+
+        con.autocommit = False
+
+        cursor = con.cursor()
+
+        sql_get = """
+                    SELECT name_cv FROM resume
+                    WHERE id_customer_customer = %s
+                    AND id_cv = %s
+                    """
+        cursor.execute(sql_get, (id_customer,id_cv))
+
+
+        row = cursor.fetchone()
+
+        return str(row[0])
+
+        con.commit()
+
+
+    except psycopg2.Error as e:
+        print("Error connecting", e)
+        con.rollback();
+
+    finally:
+        cursor.close()
+        con.close()
+        print("Conection closed")
+
+def get_category_list():
+# returns a tuple like: (id_company, name_company)
+    try:
+        con = psycopg2.connect(user = "postgres",
+                               password = "Cabrera05",
+                               database = "Sweden",
+                               host = "database-1.ccgnox6axprd.us-east-2.rds.amazonaws.com",
+                               port = "5432")
+        print("Conexión exitosa!")
+
+        con.autocommit = False
+
+        cursor = con.cursor()
+
+        sql_get = """
+                    SELECT * FROM main_sector
+                    """
+        cursor.execute(sql_get)
+
+        rows = cursor.fetchall()
+
+        return rows
+
+        con.commit()
+
+
+    except psycopg2.Error as e:
+        print("Error connecting", e)
+        con.rollback();
+
+    finally:
+        cursor.close()
+        con.close()
+        print("Conection closed")
+
+def get_subcategory_list():
+# returns a tuple like: (id_company, name_company)
+    try:
+        con = psycopg2.connect(user = "postgres",
+                               password = "Cabrera05",
+                               database = "Sweden",
+                               host = "database-1.ccgnox6axprd.us-east-2.rds.amazonaws.com",
+                               port = "5432")
+        print("Conexión exitosa!")
+
+        con.autocommit = False
+
+        cursor = con.cursor()
+
+        sql_get = """
+                    SELECT * FROM subcategory
+                    """
+        cursor.execute(sql_get)
 
         rows = cursor.fetchall()
 

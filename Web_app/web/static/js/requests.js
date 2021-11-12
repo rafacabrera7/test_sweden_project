@@ -34,17 +34,19 @@ function editClientBodyReport(client_id, bodymsg, client_body_id) {
 }
 
 
-function editJobOffer(name, description, email_joboffer, company,
+function editJobOffer(job_id, name, description, email_joboffer, company,
   city, url, maincategory, subcategory) {
   forminputs = document.querySelector("#insert_job_form").getElementsByTagName("input")
-  forminputs[0].value = name
-  forminputs[1].value = description
-  forminputs[2].value = email_joboffer
-  forminputs[3].value = company
-  forminputs[4].value = city
-  forminputs[5].value = url
-  forminputs[6].value = maincategory
-  forminputs[7].value = subcategory
+
+  forminputs[0].value = job_id
+  forminputs[1].value = name
+  forminputs[2].value = description
+  forminputs[3].value = email_joboffer
+  forminputs[4].value = company
+  forminputs[5].value = city
+  forminputs[6].value = url
+  forminputs[7].value = maincategory
+  forminputs[8].value = subcategory
 
   switchNavTab("insert_job")
 }
@@ -195,8 +197,8 @@ function updateClientTables(clientlist) {
     let client = clientlist[i];
     insert_tablerow("client_list_table",
       [i + 1, client["client_id"], client["name"], client["email"],
-      client["email_password"], client["date_inserted"], client["number_of_apps"]],
-      () => { editFormFromTable(i + 1, "client_list_table", "insert_client_form") })
+      client["email_password"], client["date_inserted"]],
+      () => {editFormFromTable(i + 1, "client_list_table", "insert_client_form") })
   }
 
 }
@@ -228,7 +230,7 @@ function updateJobTables(jobslist) {
   // repopulate
   for (let i = 0; i < jobslist.length; i++) {
     let job = jobslist[i];
-    insert_tablerow("joblist_table", [i + 1, job["job_name"], job["company"], job["email"], job["url"], job["date"]])
+    insert_tablerow("joblist_table", [i + 1, job["job_id"], job["job_name"], job["company"], job["email"], job["url"], job["date"]])
   }
 
 }
@@ -243,10 +245,10 @@ function updateJobOffersTables(jobofferslist) {
   // repopulate
   for (let i = 0; i < jobofferslist.length; i++) {
     let joboffer = jobofferslist[i];
-    insert_tablerow("joboffers_table", [i + 1, joboffer["job_name"], joboffer["description"],
-    joboffer["company"], joboffer["url"], joboffer["date"], joboffer["category"], joboffer["subcategory"]],
+    insert_tablerow("joboffers_table", [i + 1, joboffer["job_id"], joboffer["job_name"], joboffer["description"],
+    joboffer["email_joboffer"], joboffer["company"], joboffer["url"], joboffer["date"], joboffer["category"], joboffer["subcategory"]],
       () => {
-        editJobOffer(joboffer["job_name"], joboffer["description"], joboffer["email_joboffer"],
+        editJobOffer(joboffer["job_id"], joboffer["job_name"], joboffer["description"], joboffer["email_joboffer"],
           joboffer["company"], joboffer["city"], joboffer["url"],
           joboffer["category"], joboffer["subcategory"]
         );
@@ -275,6 +277,44 @@ function updateCompaniesTables() {
 }
 
 
+function updateJobCategoryTable() {
+  performGetRequest("/list_job_categories", null, (json) => {
+    // reset table
+    let nodelist = document.querySelectorAll("#job_category_list_table tbody tr")
+    nodelist.forEach(ele => {
+      ele.remove()
+    });
+    // repopulate
+    let i = 1
+    categories = json["categories"]
+    for (let id in categories) {
+      insert_tablerow("job_category_list_table", [i, id, categories[id]])
+      i += 1
+    }
+    document.querySelector("#total_job_categories_display").innerText = `Total Categories: ${json["count"]}`
+  })
+}
+
+
+
+function updateJobSubcategoryTable() {
+  performGetRequest("/list_job_subcategories", null, (json) => {
+    // reset table
+    let nodelist = document.querySelectorAll("#job_subcategory_list_table tbody tr")
+    nodelist.forEach(ele => {
+      ele.remove()
+    });
+    // repopulate
+    let i = 1
+    subcategories = json["subcategories"]
+    for (let id in subcategories) {
+      insert_tablerow("job_subcategory_list_table", [i, id, subcategories[id]])
+      i += 1
+    }
+    document.querySelector("#total_job_subcategories_display").innerText = `Total Subcategories: ${json["count"]}`
+  })
+}
+
 function updateCompanyJobTable(jobslist) {
   // reset table
   let nodelist = document.querySelectorAll("#company_joblist_table tbody tr")
@@ -285,7 +325,7 @@ function updateCompanyJobTable(jobslist) {
   // repopulate
   for (let i = 0; i < jobslist.length; i++) {
     let job = jobslist[i];
-    insert_tablerow("company_joblist_table", [i + 1, job["job_name"], job["company"], job["url"], job["city"],
+    insert_tablerow("company_joblist_table", [i + 1, job["job_id"], job["job_name"], job["description"], job["joboffer_email"], job["url"], job["city"],
     job["date"], job["category"], job["subcategory"]])
   }
 
@@ -397,6 +437,15 @@ function Initialize() {
   addClickableCallback("update_jobcompanies_list", () => {
     updateCompaniesTables()
   })
+
+  addClickableCallback("update_job_categories_list", () => {
+    updateJobCategoryTable()
+  })
+
+  addClickableCallback("update_job_subcategories_list", () => {
+    updateJobSubcategoryTable()
+  })
+
 
   addClickableCallback("search_company_report", () => {
     SubmitFormGETViaQuery("/company_report/", "company_report_form", null, (json) => {
