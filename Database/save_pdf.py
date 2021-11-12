@@ -4,7 +4,7 @@ import shutil
 from fastapi import FastAPI, File, UploadFile
 
 def save_pdf(id_customer, id_cv, file_obj,file_nm='Test'):
-    path = "/home/ubuntu/test_sweden_project/Database/CVs"
+    path = "/home/ubuntu/sweden_project/Database/CVs"
 
     path += "/id_customer_" + str(id_customer) + "/id_cv_" + str(id_cv)
 
